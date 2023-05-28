@@ -1,3 +1,5 @@
+<h1>42 ft_printf</h1>
+
 The ft_printf project is a simplified version of the printf function in C that allows you to format and print to the standard output using specified format specifiers. It supports a subset of the format specifiers provided by the standard printf function, including the following flags:
 *%c, %s, %d, %i, %u, %p, %x, and %X*.
 Getting Started
