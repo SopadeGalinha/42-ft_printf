@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:17 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/05/28 17:51:17 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:28:13 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_putchar(const char c, t_data *st)
 	st->count += write(1, &c, 1);
 }
 
-void	ft_putstr(const char *str, t_data *st)
+static void	ft_putstr(const char *str, t_data *st)
 {
 	if (!str)
 		return (ft_putstr("(null)", st));
@@ -25,7 +25,7 @@ void	ft_putstr(const char *str, t_data *st)
 		ft_putchar(*str++, st);
 }
 
-void	ft_putnbr(int nb, t_data *st)
+static void	ft_putnbr(int nb, t_data *st)
 {
 	if (nb == -2147483648)
 		return (ft_putstr("-2147483648", st));
@@ -43,7 +43,7 @@ void	ft_putnbr(int nb, t_data *st)
 		ft_putchar("0123456789"[nb], st);
 }
 
-void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
+static void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 {
 	char	*base;
 
@@ -65,4 +65,27 @@ void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 	}
 	else
 		ft_putchar(base[nb], st);
+}
+
+void	flag_conversions(char fmt, t_data *st, va_list args)
+{
+	st->hex_ref = 16;
+	if (fmt == '%')
+		ft_putchar('%', st);
+	if (fmt == 'c')
+		ft_putchar(va_arg(args, int), st);
+	if (fmt == 's')
+		ft_putstr(va_arg(args, char *), st);
+	if (fmt == 'd' || fmt == 'i')
+		ft_putnbr(va_arg(args, int), st);
+	if (fmt == 'x' || fmt == 'X' || fmt == 'u')
+		ft_hex_base(va_arg(args, unsigned int), fmt, st);
+	if (fmt == 'p')
+	{
+		st->pointer = va_arg(args, long);
+		if (st->pointer == 0)
+			return (ft_putstr("(nil)", st));
+		ft_putstr("0x", st);
+		ft_hex_base(st->pointer, 'x', st);
+	}
 }
