@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhgoncal <jhgoncal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 17:09:28 by jhgoncal          #+#    #+#             */
-/*   Updated: 2022/03/28 17:09:28 by jhgoncal         ###   ########.fr       */
+/*   Created: 2023/05/28 13:34:43 by jhogonca          #+#    #+#             */
+/*   Updated: 2023/05/28 15:09:54 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,24 @@
 # include <stdarg.h>
 # include <unistd.h>
 
+typedef struct s_data
+{
+	int		count;
+	int		index;
+	char	flag;
+	long	pointer;
+}	t_data;
+
 /*
 ** \_____________________________FUNCTIONS_____________________________________/
 */
 
-int	ft_putnbr(int nb);
-int	ft_putchar(const char c);
-int	ft_putstr(const char *str);
-int	ft_printf(const char *fmt, ...);
-int	ft_ubase(unsigned int nb);
-int	ft_hex_base(unsigned long nb, int fmt);
-int	flag_conversions(char fmt, va_list args);
+
+int		ft_printf(const char *fmt, ...);
+void	ft_putnbr(int nb, t_data *st);
+void	ft_putchar(const char c, t_data *st);
+void	ft_putstr(const char *str, t_data *st);
+void	ft_ubase(unsigned int nb, t_data *st);
+void	ft_hex_base(unsigned long nb, int fmt, t_data *st);
 
 #endif

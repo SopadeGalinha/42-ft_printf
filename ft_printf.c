@@ -3,58 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhgoncal <jhgoncal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 19:38:25 by jhgoncal          #+#    #+#             */
-/*   Updated: 2022/02/16 19:38:25 by jhgoncal         ###   ########.fr       */
+/*   Created: 2023/05/28 13:33:24 by jhogonca          #+#    #+#             */
+/*   Updated: 2023/05/28 15:07:45 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
 
-int	flag_conversions(char fmt, va_list args)
+static void	flag_conversions(char fmt, t_data *st, va_list args)
 {
-	int	c;
-
-	c = 0;
 	if (fmt == '%')
-		c += write(1, &fmt, 1);
+		ft_putchar('%', st);
 	if (fmt == 'c')
-		c += ft_putchar(va_arg(args, int));
+		ft_putchar(va_arg(args, int), st);
 	if (fmt == 's')
-		c += ft_putstr(va_arg(args, char *));
+		ft_putstr(va_arg(args, char *), st);
 	if (fmt == 'd' || fmt == 'i')
-		c += ft_putnbr(va_arg(args, int));
+		ft_putnbr(va_arg(args, int), st);
+	if (fmt == 'u')
+		ft_ubase(va_arg(args, unsigned int), st);
 	if (fmt == 'x' || fmt == 'X')
-		c += ft_hex_base(va_arg(args, unsigned int), fmt);
+		ft_hex_base(va_arg(args, unsigned int), fmt, st);
 	if (fmt == 'p')
 	{
-		c += write(1, "0x", 2);
-		c += ft_hex_base(va_arg(args, unsigned long), 'x');
+		st->pointer = va_arg(args, long);
+		if (st->pointer == 0)
+			return (ft_putstr("(nil)", st));
+		ft_putstr("0x", st);
+		ft_hex_base(st->pointer, 'x', st);
 	}
-	if (fmt == 'u')
-		c += ft_ubase(va_arg(args, unsigned int));
-	return (c);
 }
 
 int	ft_printf(const char *fmt, ...)
 {
-	int		i;
-	int		c;
+	t_data	st;
 	va_list	args;
 
-	c = 0;
-	i = -1;
+	st.count = 0;
+	st.index = -1;
 	va_start(args, fmt);
-	while (fmt[++i])
+	while (fmt[++st.index])
 	{
-		if (fmt[i] == '%')
-		{
-			c += flag_conversions(fmt[++i], args);
-			continue ;
-		}
-		c += write(1, &fmt[i], 1);
+		if (fmt[st.index] == '%')
+			flag_conversions(fmt[++st.index], &st, args);
+		else
+			ft_putchar(fmt[st.index], &st);
 	}
 	va_end(args);
-	return (c);
+	return (st.count);
 }

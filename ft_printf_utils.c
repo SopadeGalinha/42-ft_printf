@@ -3,92 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhgoncal <jhgoncal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 17:08:08 by jhgoncal          #+#    #+#             */
-/*   Updated: 2022/03/28 19:37:10 by jhgoncal         ###   ########.fr       */
+/*   Created: 2023/05/28 13:34:17 by jhogonca          #+#    #+#             */
+/*   Updated: 2023/05/28 15:15:22 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"ft_printf.h"
 
-int	ft_ubase(unsigned int nb)
+void	ft_putchar(const char c, t_data *st)
 {
-	int	c;
-
-	c = 0;
-	if (nb >= 10)
-	{
-		c += ft_ubase(nb / 10);
-		c += ft_ubase(nb % 10);
-	}
-	else
-		c += ft_putchar("0123456789"[nb]);
-	return (c);
+	st->count += write(1, &c, 1);
 }
 
-int	ft_putstr(const char *str)
+void	ft_putstr(const char *str, t_data *st)
 {
-	int	c;
-
-	c = -1;
 	if (!str)
-		return (ft_putstr("(null)"));
-	while (str[++c])
-		write(1, &str[c], 1);
-	return (c);
+		return (ft_putstr("(null)", st));
+	while (*str)
+		ft_putchar(*str++, st);
 }
 
-int	ft_putchar(const char c)
+void	ft_putnbr(int nb, t_data *st)
 {
-	return (write(1, &c, 1));
-}
-
-int	ft_putnbr(int nb)
-{
-	int	counter;
-
-	counter = 0;
-	if (nb == 0)
-		return (write(1, "0", 1));
 	if (nb == -2147483648)
-	{
-		counter += ft_putstr("-2147483648");
-		return (counter);
-	}
+		return (ft_putstr("-2147483648", st));
 	if (nb < 0)
 	{
-		counter += write(1, "-", 1);
+		ft_putchar('-', st);
 		nb *= -1;
 	}
-	if (nb < 10)
-		counter += ft_putchar(nb + '0');
-	else
+	if (nb > 9)
 	{
-		counter += ft_putnbr(nb / 10);
-		counter += ft_putchar((nb % 10) + '0');
+		ft_putnbr(nb / 10, st);
+		ft_putnbr(nb % 10, st);
 	}
-	return (counter);
+	else
+		ft_putchar("0123456789"[nb], st);
 }
 
-int	ft_hex_base(unsigned long nb, int fmt)
+void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 {
-	int		c;
 	char	*base;
 
-	c = 0;
 	if (nb == 0)
-		return (write(1, "0", 1));
+		return (ft_putchar('0', st));
 	if (fmt == 'x')
 		base = "0123456789abcdef";
 	if (fmt == 'X')
 		base = "0123456789ABCDEF";
-	if (nb >= 16)
+	if ()
+	if (nb > 9)
 	{
-		c += ft_hex_base(nb / 16, fmt);
-		c += ft_hex_base(nb % 16, fmt);
+		if (nb >= 16 && st->flag != 'u')
+		{
+			ft_hex_base(nb / 16, st);
+			ft_hex_base(nb % 16, st);
+		}
+		else
+			ft_hex_base(nb / 10, st);
+			ft_hex_base(nb % 10, st);
 	}
 	else
-		c += ft_putchar(base[nb]);
-	return (c);
+		ft_putchar(base[nb], st);
+}
+
+void	ft_ubase(unsigned int nb, t_data *st)
+{
+	if (nb >= 10)
+	{
+		ft_ubase(nb / 10, st);
+		ft_ubase(nb % 10, st);
+	}
+	else
+		ft_putchar("0123456789"[nb], st);
 }
