@@ -1,15 +1,10 @@
+The ft_printf project is a simplified version of the printf function in C that allows you to format and print to the standard output using specified format specifiers. It supports a subset of the format specifiers provided by the standard printf function, including the following flags:
+*%c, %s, %d, %i, %u, %p, %x, and %X*.
+Getting Started
 
-# <h1>42 ft_printf</h1>
+To get started with ft_printf, follow these steps:
 
-
-The ft_printf project aims to provide a simplified version of the printf function in C.
-It allows you to format and print to the standard output according to specified format specifiers. 
-This implementation supports a subset of the format specifiers provided by the standard printf function.
-Support for basic format specifiers like %c, %s, %d, %i, %u, %p, %x, %X
-
-## Getting Started
-
-To get started with **ft_printf**, you can simply download or clone the repository to your local machine:
+    Download or clone the repository to your local machine by running the following command:
 
 `git clone https://github.com/SopadeGalinha/42-ft_printf.git`
 
@@ -25,4 +20,10 @@ This will generate the **ft_libftprintf.a** file, which can be linked to your C 
 
 To compile your code you can do:
 
-`gcc yourmaincode.c libftprintf.a`
+`gcc yourmaincode.c libftprintf.a && ./a.out`
+
+     Your program will now use the ft_printf function to format and print output based on the format specifiers you provide.
+
+Note: Make sure to include the necessary header files in your main code, such as ft_printf.h, to access the function prototypes and definitions.
+
+Feel free to explore the ft_printf repository for more information and examples on how to use the ft_printf function effectively.
