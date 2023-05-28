@@ -24,6 +24,5 @@ To compile your code you can do:
 
 Your program will now use the ft_printf function to format and print output based on the format specifiers you provide.
 
-Note: Make sure to include the necessary header files in your main code, such as ft_printf.h, to access the function prototypes and definitions.
+Note: `Make sure to include the necessary header files in your main code, such as ft_printf.h, to access the function prototypes and definitions.`
 
-Feel free to explore the ft_printf repository for more information and examples on how to use the ft_printf function effectively.
