@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:33:24 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/05/28 17:21:37 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/05/28 17:47:31 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	flag_conversions(char fmt, t_data *st, va_list args)
 {
+	st->hex_ref = 16;
 	if (fmt == '%')
 		ft_putchar('%', st);
 	if (fmt == 'c')
@@ -22,9 +23,7 @@ static void	flag_conversions(char fmt, t_data *st, va_list args)
 		ft_putstr(va_arg(args, char *), st);
 	if (fmt == 'd' || fmt == 'i')
 		ft_putnbr(va_arg(args, int), st);
-	if (fmt == 'u')
-		ft_ubase(va_arg(args, unsigned int), st);
-	if (fmt == 'x' || fmt == 'X')
+	if (fmt == 'x' || fmt == 'X' || fmt == 'u')
 		ft_hex_base(va_arg(args, unsigned int), fmt, st);
 	if (fmt == 'p')
 	{

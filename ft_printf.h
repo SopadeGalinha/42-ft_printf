@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:43 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/05/28 15:09:54 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/05/28 17:50:34 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
 
 typedef struct s_data
 {
-	int		count;
-	int		index;
-	char	flag;
-	long	pointer;
+	char			flag;
+	int				count;
+	int				index;
+	long			pointer;
+	unsigned int	hex_ref;
 }	t_data;
 
 /*
 ** \_____________________________FUNCTIONS_____________________________________/
 */
-
 
 int		ft_printf(const char *fmt, ...);
 void	ft_putnbr(int nb, t_data *st);

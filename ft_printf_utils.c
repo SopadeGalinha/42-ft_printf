@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:17 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/05/28 17:26:34 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/05/28 17:51:17 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,16 @@ void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 		base = "0123456789abcdef";
 	if (fmt == 'X')
 		base = "0123456789ABCDEF";
-	if (nb >= 16)
+	if (fmt == 'u')
 	{
-		ft_hex_base(nb / 16, fmt, st);
-		ft_hex_base(nb % 16, fmt, st);
+		st->hex_ref = 10;
+		base = "0123456789";
+	}
+	if (nb >= st->hex_ref)
+	{
+		ft_hex_base(nb / st->hex_ref, fmt, st);
+		ft_hex_base(nb % st->hex_ref, fmt, st);
 	}
 	else
 		ft_putchar(base[nb], st);
-}
-
-void	ft_ubase(unsigned int nb, t_data *st)
-{
-	if (nb >= 10)
-	{
-		ft_ubase(nb / 10, st);
-		ft_ubase(nb % 10, st);
-	}
-	else
-		ft_putchar("0123456789"[nb], st);
 }
