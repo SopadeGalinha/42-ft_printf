@@ -1,8 +1,10 @@
 <h1>42 ft_printf</h1>
 
 The ft_printf project is a simplified version of the printf function in C that allows you to format and print to the standard output using specified format specifiers.
+
  THIS CODE HANDLE THE FOLLOWING FLAGS: cspdiuxXob% 
- o = octal
+
+o = octal
  b = binary
  p = pointer
  d = decimal
