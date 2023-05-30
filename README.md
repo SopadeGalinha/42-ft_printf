@@ -1,8 +1,18 @@
 <h1>42 ft_printf</h1>
 
-The ft_printf project is a simplified version of the printf function in C that allows you to format and print to the standard output using specified format specifiers. It supports a subset of the format specifiers provided by the standard printf function, including the following flags:
-
-**%c, %s, %d, %i, %u, %p, %x, and %X**.
+The ft_printf project is a simplified version of the printf function in C that allows you to format and print to the standard output using specified format specifiers.
+ THIS CODE HANDLE THE FOLLOWING FLAGS: cspdiuxXob% 
+ o = octal
+ b = binary
+ p = pointer
+ d = decimal
+ i = integer
+ u = unsigned integer
+ x = hexadecimal
+ X = hexadecimal
+ c = character
+ s = string
+ % = percent
 
 **Getting Started**
 
