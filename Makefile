@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/28 13:36:34 by jhogonca          #+#    #+#              #
-#    Updated: 2023/05/28 18:10:47 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/05/30 23:07:14 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME =  libftprintf.a
 
-SRCS = ft_printf.c ft_printf_utils.c
+SRCS = ft_printf.c
 OBJS = ${SRCS:.c=.o}
 
 CC		= gcc
