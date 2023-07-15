@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:43 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/05/30 23:07:03 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/07/15 07:15:04 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ typedef struct s_data
 {
 	int				count;
 	int				index;
-	long			pointer;
-	unsigned int	hex_ref;
-	char			*str;
+	long			temporary;
+	unsigned int	base_ref;
 }	t_data;
 
 // - FUNCTIONS

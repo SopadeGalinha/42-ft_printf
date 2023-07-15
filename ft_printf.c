@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:33:24 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/07/15 07:08:37 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/07/15 07:14:27 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 	if (fmt == 'x')
 		base = "0123456789abcdef";
 	if (fmt == 'b')
-		st->hex_ref = 2;
+		st->base_ref = 2;
 	if (fmt == 'o')
-		st->hex_ref = 8;
+		st->base_ref = 8;
 	if (fmt == 'u')
-		st->hex_ref = 10;
-	if (nb >= st->hex_ref)
-		ft_hex_base(nb / st->hex_ref, fmt, st);
-	ft_putchar(base[nb % st->hex_ref], st);
+		st->base_ref = 10;
+	if (nb >= st->base_ref)
+		ft_hex_base(nb / st->base_ref, fmt, st);
+	ft_putchar(base[nb % st->base_ref], st);
 }
 
 static void	flag_conversions(char fmt, t_data *st, va_list args)
@@ -51,24 +51,24 @@ static void	flag_conversions(char fmt, t_data *st, va_list args)
 		ft_putstr(va_arg(args, char *), st);
 	if (fmt == 'd' || fmt == 'i')
 	{
-		st->pointer = va_arg(args, int);
-		if (st->pointer < 0)
+		st->temporary = va_arg(args, int);
+		if (st->temporary < 0)
 		{
 			ft_putchar('-', st);
-			st->pointer *= -1;
+			st->temporary *= -1;
 		}
-		ft_hex_base(st->pointer, 'u', st);
+		ft_hex_base(st->temporary, 'u', st);
 	}
 	if (fmt == 'x' || fmt == 'X' || fmt == 'u'
 		|| fmt == 'o' || fmt == 'b')
 		ft_hex_base(va_arg(args, unsigned int), fmt, st);
 	if (fmt == 'p')
 	{
-		st->pointer = va_arg(args, long);
-		if (st->pointer == 0)
+		st->temporary = va_arg(args, long);
+		if (st->temporary == 0)
 			return (ft_putstr("(nil)", st));
 		ft_putstr("0x", st);
-		ft_hex_base(st->pointer, 'x', st);
+		ft_hex_base(st->temporary, 'x', st);
 	}
 }
 
@@ -82,7 +82,7 @@ int	ft_printf(const char *fmt, ...)
 	va_start(args, fmt);
 	while (fmt[++st.index])
 	{
-		st.hex_ref = 16;
+		st.base_ref = 16;
 		if (fmt[st.index] == '%')
 		{
 			if (fmt[++st.index] == '%')
