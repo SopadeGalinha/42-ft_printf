@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:33:24 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/05/30 23:09:57 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/07/15 07:08:37 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ static void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 {
 	char	*base;
 
+	base = "0123456789ABCDEF";
 	if (fmt == 'x')
 		base = "0123456789abcdef";
-	else
-		base = "0123456789ABCDEF";
 	if (fmt == 'b')
 		st->hex_ref = 2;
 	if (fmt == 'o')
@@ -40,12 +39,8 @@ static void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 	if (fmt == 'u')
 		st->hex_ref = 10;
 	if (nb >= st->hex_ref)
-	{
 		ft_hex_base(nb / st->hex_ref, fmt, st);
-		ft_hex_base(nb % st->hex_ref, fmt, st);
-	}
-	else
-		ft_putchar(base[nb], st);
+	ft_putchar(base[nb % st->hex_ref], st);
 }
 
 static void	flag_conversions(char fmt, t_data *st, va_list args)
@@ -64,7 +59,8 @@ static void	flag_conversions(char fmt, t_data *st, va_list args)
 		}
 		ft_hex_base(st->pointer, 'u', st);
 	}
-	if (fmt == 'x' || fmt == 'X' || fmt == 'u')
+	if (fmt == 'x' || fmt == 'X' || fmt == 'u'
+		|| fmt == 'o' || fmt == 'b')
 		ft_hex_base(va_arg(args, unsigned int), fmt, st);
 	if (fmt == 'p')
 	{
