@@ -5,7 +5,7 @@
 </h2>
 
 <p align=center>
-  The `ft_printf` project presents an elevated iteration of the conventional `printf` function in the C programming language. This advanced version empowers developers to meticulously format and seamlessly print content to the standard output, all while leveraging a comprehensive range of meticulously defined format specifiers.
+  The 'ft_printf' project presents an elevated iteration of the conventional 'printf' function in the C programming language. This advanced version empowers developers to meticulously format and seamlessly print content to the standard output, all while leveraging a comprehensive range of meticulously defined format specifiers.
 
 This code handles the following flags: `c`, `s`, `p`, `d`, `i`, `u`, `x`, `X`, `o`, `b`, and `%`.
 
