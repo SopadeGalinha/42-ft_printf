@@ -12,7 +12,7 @@
 
 <div align=center>
 <h2>
-	Final score
+	Final score && Evaluation
 </h2>
 
 ## Project Overview
