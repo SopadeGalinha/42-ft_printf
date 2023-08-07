@@ -10,6 +10,11 @@
   This project is an advanced implementation of the standard <b>printf</b> function in the C programming language, designed to provide developers with enhanced formatting capabilities and seamless content printing to the standard output.
 </p>
 
+<div align=center>
+<h2>
+	Final score
+</h2>
+
 ## Project Overview
 
 The `ft_printf` project introduces an evolved version of the traditional printf function. It equips developers with a wide array of meticulously defined format specifiers, enabling precise content arrangement and efficient output printing. This project supports the following specifiers:
