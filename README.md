@@ -1,25 +1,41 @@
-<h1 align=center>
-	<b>ft_printf</b>
-<h2 align=center>
-	 <i>42cursus' project #3</i>
+<h1 align="center">
+  <b>ft_printf</b>
+</h1>
+
+<h2 align="center">
+  <i>42cursus Project #3</i>
 </h2>
 
-<p align=center>
-  The "ft_printf" project presents an elevated iteration of the conventional "printf" function in the C programming language. This advanced version empowers developers to meticulously format and seamlessly print content to the standard output, all while leveraging a comprehensive range of meticulously defined format specifiers.
+<p align="center">
+  Welcome to the <b>ft_printf</b> repository! This project is an advanced implementation of the standard printf function in the C programming language, designed to provide developers with enhanced formatting capabilities and seamless content printing to the standard output.
+</p>
 
-This code handles the following flags: `c`, `s`, `p`, `d`, `i`, `u`, `x`, `X`, `o`, `b`, and `%`.
+## Project Overview
 
-- `o`: octal
-- `b`: binary
-- `p`: pointer
-- `d`: decimal
-- `i`: integer
-- `u`: unsigned integer
-- `x`: lowercase hexadecimal
-- `X`: uppercase hexadecimal
-- `c`: character
-- `s`: string
-- `%`: percent
+The `ft_printf` project introduces an evolved version of the traditional printf function. It equips developers with a wide array of meticulously defined format specifiers, enabling precise content arrangement and efficient output printing. This project supports the following specifiers:
+
+- `c`: Character
+- `s`: String
+- `p`: Pointer
+- `d`: Decimal
+- `i`: Integer
+- `u`: Unsigned Integer
+- `x`: Lowercase Hexadecimal
+- `X`: Uppercase Hexadecimal
+- `o`: Octal
+- `b`: Binary
+- `%`: Percent
+
+Each specifier is crafted to meet specific formatting needs, providing versatility in displaying various types of data.
+
+## How to Use
+
+To utilize the `ft_printf` function in your C projects, follow these steps:
+
+1. Clone or download this repository.
+2. Compile the `libftprintf.a` library using the provided Makefile.
+3. Include the `libftprintf.h` header file in your project.
+
 
 **Getting Started**
 
