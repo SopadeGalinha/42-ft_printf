@@ -1,6 +1,11 @@
-<h1>42 ft_printf</h1>
+<h1 align=center>
+	<b>ft_printf</b>
+<h2 align=center>
+	 <i>42cursus' project #3</i>
+</h2>
 
-The `ft_printf` project is an enhanced version of the `printf` function in C that allows you to format and print to the standard output using specified format specifiers.
+<p align=center>
+  The `ft_printf` project is an enhanced version of the `printf` function in C that allows you to format and print to the standard output using specified format specifiers.
 
 This code handles the following flags: `c`, `s`, `p`, `d`, `i`, `u`, `x`, `X`, `o`, `b`, and `%`.
 
