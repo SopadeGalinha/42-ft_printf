@@ -14,8 +14,6 @@
 
 The `ft_printf` project introduces an evolved version of the traditional printf function. It equips developers with a wide array of meticulously defined format specifiers, enabling precise content arrangement and efficient output printing. This project supports the following specifiers:
 
-### Conversions & Flags & Expected Order
-
 | Conversion  | Description														 			| Project 		|
 |-------|-----------------------------------------------------------------------------------|---------------|
 | **c** | Single ascii character         													|Mandatory		|
@@ -28,6 +26,7 @@ The `ft_printf` project introduces an evolved version of the traditional printf 
 | **X** | Unsigned number printed in uppercase hexadecimal base                				|Mandatory		|
 | **%** | The '%' ascii character                 											|Mandatory		|
 | **o** | Unsigned number printed in octal base                 							|Extra			|
+| **b** | Unsigned number printed in binary base                 							|Extra			|
 
 
 Each specifier is crafted to meet specific formatting needs, providing versatility in displaying various types of data.
