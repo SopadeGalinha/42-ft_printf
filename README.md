@@ -1,38 +1,156 @@
 <h1 align="center">
-  <b>Hello there, World Traveler!</b>
+  <b>ft_printf</b>
 </h1>
 
-<p align="center">
-  <img src="https://github.com/SopadeGalinha/SopadeGalinha/assets/75684404/23754dd9-acba-44f5-a80e-3274e59e3b6d" alt="ChillMario"/>
-</p>
+<h2 align="center">
+  <i>42cursus Project #3</i>
+</h2>
 
 <p align="center">
-  🚀 Welcome to my corner of the coding universe! I'm Jhonata, but you can call me Sopa. As a passionate Data Engineer and RPA Developer at Nós SGPS, I spend my days shaping data and automating processes. When I'm not immersed in code, you'll find me diving into the captivating world of Unity 3D.
+  This project is an advanced implementation of the standard <b>printf</b> function in the C programming language, designed to provide developers with enhanced formatting capabilities and seamless content printing to the standard output.
 </p>
+
+<div align=center>
+<h2>
+	Final Score & Evaluation
+</h2>
+
+## Project Overview
+
+The `ft_printf` project introduces an evolved version of the traditional printf function. It equips developers with a wide array of meticulously defined format specifiers, enabling precise content arrangement and efficient output printing. This project supports the following specifiers:
+
+| Conversion  | Description														 			| Project 		|
+|-------|-----------------------------------------------------------------------------------|---------------|
+| **c** | Single ascii character         													|Mandatory		|
+| **s** | String of characters NULL terminated												|Mandatory		|
+| **p** | Pointer location converted to hexadecimal value									|Mandatory		|
+| **d** | Decimal number 																	|Mandatory		|
+| **i** | Integer in decimal base                 											|Mandatory		|
+| **u** | Unsigned integer in decimal base                									|Mandatory		|
+| **x** | Unsigned number printed in lowercase hexadecimal base                				|Mandatory		|
+| **X** | Unsigned number printed in uppercase hexadecimal base                				|Mandatory		|
+| **%** | The '%' ascii character                 											|Mandatory		|
+| **o** | Unsigned number printed in octal base                 							|Extra			|
+| **b** | Unsigned number printed in binary base                 							|Extra			|
+
+
+Each specifier is crafted to meet specific formatting needs, providing versatility in displaying various types of data.
+
+## How to Use
+
+To utilize the `ft_printf` function in your C projects, follow these steps:
+
+1. Clone or download this repository.
+2. Compile the `libftprintf.a` library using the provided Makefile.
+3. Include the `libftprintf.h` header file in your project.
+
+
+**Getting Started**
+
+To get started with `ft_printf`, follow these steps:
+
+1. Download or clone the repository to your local machine by running the following command:
+
+```shell
+git clone https://github.com/SopadeGalinha/42-ft_printf.git
+```
+
+The repository contains the source code, along with a Makefile that can be used to compile the program.
+
+2. To build the program, navigate to the repository's root directory and run the following command:
+
+```shell
+make
+```
+
+This will generate the `ft_libftprintf.a` file, which can be linked to your C project.
+
+**How to use it**
+
+To compile your code, you can use the following command:
+
+```shell
+gcc your_main_code.c libftprintf.a && ./a.out
+```
+
+Your program will now use the `ft_printf` function to format and print output based on the format specifiers you provide.
+
+Make sure to include the necessary header files in your main code, such as `ft_printf.h`, to access the function prototypes and definitions.
+<h1 align="center">
+  <b>ft_printf</b>
+</h1>
+
+<h2 align="center">
+  <i>42cursus Project #3</i>
+</h2>
 
 <p align="center">
-  I'm a seasoned software developer with proficiency in C, C#, UiPath, Unity 3D, Unix, and SQL. Currently, I'm on a journey of exploration, delving into the realms of C++ and JavaScript.
+  This project is an advanced implementation of the standard <b>printf</b> function in the C programming language, designed to provide developers with enhanced formatting capabilities and seamless content printing to the standard output.
 </p>
 
-<p align="center">
-  42Cadets, feel free to reach out to me on Slack: <strong>@jhogonca</strong>
-</p>
+<div align=center>
+<h2>
+	Final Score & Evaluation
+</h2>
 
-<div align="center">
-  <a href="https://github.com/SopadeGalinha">
-    <img height="170em" src="https://github-readme-stats.vercel.app/api?username=SopadeGalinha&show_icons=true&theme=vision-friendly-dark&include_all_commits=true&count_private=true&title_color=FF6B6B&icon_color=FF6B6B"/>
-    <img height="170em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=SopadeGalinha&layout=compact&langs_count=7&theme=vision-friendly-dark&title_color=FF6B6B"/>
-  </a>
-</div>
+## Project Overview
 
-<div style="display: inline_block" align="center"><br>
-</div>
-  
-<div align="center">
-  <p>
-    <a href="https://instagram.com/expereai" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=black" target="_blank"></a>
-    <a href="https://www.linkedin.com/in/jhonata-gon%C3%A7alves-899160248/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=black" target="_blank"></a> 
-  </p>
+The `ft_printf` project introduces an evolved version of the traditional printf function. It equips developers with a wide array of meticulously defined format specifiers, enabling precise content arrangement and efficient output printing. This project supports the following specifiers:
 
-  <img src="https://github.com/rafaballerini/rafaballerini/blob/output/github-contribution-grid-snake.svg?color=blue" alt="Snake animation">
-</div>
+| Conversion  | Description														 			| Project 		|
+|-------|-----------------------------------------------------------------------------------|---------------|
+| **c** | Single ascii character         													|Mandatory		|
+| **s** | String of characters NULL terminated												|Mandatory		|
+| **p** | Pointer location converted to hexadecimal value									|Mandatory		|
+| **d** | Decimal number 																	|Mandatory		|
+| **i** | Integer in decimal base                 											|Mandatory		|
+| **u** | Unsigned integer in decimal base                									|Mandatory		|
+| **x** | Unsigned number printed in lowercase hexadecimal base                				|Mandatory		|
+| **X** | Unsigned number printed in uppercase hexadecimal base                				|Mandatory		|
+| **%** | The '%' ascii character                 											|Mandatory		|
+| **o** | Unsigned number printed in octal base                 							|Extra			|
+| **b** | Unsigned number printed in binary base                 							|Extra			|
+
+
+Each specifier is crafted to meet specific formatting needs, providing versatility in displaying various types of data.
+
+## How to Use
+
+To utilize the `ft_printf` function in your C projects, follow these steps:
+
+1. Clone or download this repository.
+2. Compile the `libftprintf.a` library using the provided Makefile.
+3. Include the `libftprintf.h` header file in your project.
+
+
+**Getting Started**
+
+To get started with `ft_printf`, follow these steps:
+
+1. Download or clone the repository to your local machine by running the following command:
+
+```shell
+git clone https://github.com/SopadeGalinha/42-ft_printf.git
+```
+
+The repository contains the source code, along with a Makefile that can be used to compile the program.
+
+2. To build the program, navigate to the repository's root directory and run the following command:
+
+```shell
+make
+```
+
+This will generate the `ft_libftprintf.a` file, which can be linked to your C project.
+
+**How to use it**
+
+To compile your code, you can use the following command:
+
+```shell
+gcc your_main_code.c libftprintf.a && ./a.out
+```
+
+Your program will now use the `ft_printf` function to format and print output based on the format specifiers you provide.
+
+Make sure to include the necessary header files in your main code, such as `ft_printf.h`, to access the function prototypes and definitions.
