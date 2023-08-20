@@ -36,8 +36,9 @@ The `ft_printf` project introduces an evolved version of the traditional printf 
 
 Each specifier is crafted to meet specific formatting needs, providing versatility in displaying various types of data.
 
+</div>
+
 ## How to Use
-<h1 align="left">
 
 To utilize the `ft_printf` function in your C projects, follow these steps:
 
