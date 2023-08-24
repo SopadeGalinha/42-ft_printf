@@ -38,15 +38,6 @@ Each specifier is crafted to meet specific formatting needs, providing versatili
 
 </div>
 
-## How to Use
-
-To utilize the `ft_printf` function in your C projects, follow these steps:
-
-1. Clone or download this repository.
-2. Compile the `libftprintf.a` library using the provided Makefile.
-3. Include the `libftprintf.h` header file in your project.
-
-
 **Getting Started**
 
 To get started with `ft_printf`, follow these steps:
