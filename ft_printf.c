@@ -88,7 +88,7 @@ int	ft_printf(const char *fmt, ...)
 			if (fmt[++st.index] == '%')
 				ft_putchar('%', &st);
 			else
-				flag_conversions(fmt[+st.index], &st, args);
+				flag_conversions(fmt[st.index], &st, args);
 		}
 		else
 			ft_putchar(fmt[st.index], &st);
