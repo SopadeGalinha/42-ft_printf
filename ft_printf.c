@@ -29,18 +29,19 @@ static void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
 {
 	char	*base;
 
-	base = "0123456789ABCDEF";
 	if (fmt == 'x')
 		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
 	if (fmt == 'b')
-		st->base_ref = 2;
+		st->hex_ref = 2;
 	if (fmt == 'o')
-		st->base_ref = 8;
+		st->hex_ref = 8;
 	if (fmt == 'u')
-		st->base_ref = 10;
-	if (nb >= st->base_ref)
-		ft_hex_base(nb / st->base_ref, fmt, st);
-	ft_putchar(base[nb % st->base_ref], st);
+		st->hex_ref = 10;
+	if (nb >= st->hex_ref)
+		ft_hex_base(nb / st->hex_ref, fmt, st);
+	ft_putchar(base[nb], st);
 }
 
 static void	flag_conversions(char fmt, t_data *st, va_list args)
@@ -49,26 +50,25 @@ static void	flag_conversions(char fmt, t_data *st, va_list args)
 		ft_putchar(va_arg(args, int), st);
 	if (fmt == 's')
 		ft_putstr(va_arg(args, char *), st);
-	if (fmt == 'd' || fmt == 'i')
+	if (fmt == 'd' || fmt == 'i' || fmt == 'o' || fmt == 'b')
 	{
-		st->temporary = va_arg(args, int);
-		if (st->temporary < 0)
+		st->pointer = va_arg(args, int);
+		if (st->pointer < 0)
 		{
 			ft_putchar('-', st);
-			st->temporary *= -1;
+			st->pointer *= -1;
 		}
-		ft_hex_base(st->temporary, 'u', st);
+		ft_hex_base(st->pointer, 'u', st);
 	}
-	if (fmt == 'x' || fmt == 'X' || fmt == 'u'
-		|| fmt == 'o' || fmt == 'b')
+	if (fmt == 'x' || fmt == 'X' || fmt == 'u')
 		ft_hex_base(va_arg(args, unsigned int), fmt, st);
 	if (fmt == 'p')
 	{
-		st->temporary = va_arg(args, long);
-		if (st->temporary == 0)
+		st->pointer = va_arg(args, long);
+		if (st->pointer == 0)
 			return (ft_putstr("(nil)", st));
 		ft_putstr("0x", st);
-		ft_hex_base(st->temporary, 'x', st);
+		ft_hex_base(st->pointer, 'x', st);
 	}
 }
 
@@ -82,7 +82,7 @@ int	ft_printf(const char *fmt, ...)
 	va_start(args, fmt);
 	while (fmt[++st.index])
 	{
-		st.base_ref = 16;
+		st.hex_ref = 16;
 		if (fmt[st.index] == '%')
 		{
 			if (fmt[++st.index] == '%')
