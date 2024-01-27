@@ -1,20 +1,15 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/28 13:33:24 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/07/15 07:14:27 by jhogonca         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include"ft_printf.h"
+#include "ft_printf.h"
+
+static void	ft_putwidth(t_data *data);
+static void	ft_putprecision(t_data *data);
+static void	ft_puthex(unsigned long nbr, unsigned int base, t_data *data);
+static int	ft_nbrlen(unsigned long nbr, unsigned int base);
+
 
 static void	ft_putchar(const char c, t_data *st)
 {
-	st->count += write(1, &c, 1);
+	st->bytes_written += write(1, &c, 1);
 }
 
 static void	ft_putstr(const char *str, t_data *st)
@@ -25,74 +20,211 @@ static void	ft_putstr(const char *str, t_data *st)
 		ft_putchar(*str++, st);
 }
 
-static void	ft_hex_base(unsigned long nb, int fmt, t_data *st)
+void	print_char(t_data *data)
 {
-	char	*base;
+	char	c;
 
-	if (fmt == 'x')
-		base = "0123456789abcdef";
-	else
-		base = "0123456789ABCDEF";
-	if (fmt == 'b')
-		st->hex_ref = 2;
-	if (fmt == 'o')
-		st->hex_ref = 8;
-	if (fmt == 'u')
-		st->hex_ref = 10;
-	if (nb >= st->hex_ref)
-		ft_hex_base(nb / st->hex_ref, fmt, st);
-	ft_putchar(base[nb], st);
+	c = va_arg(data->argument_list, int);
+	data->flags.width--;
+	if (data->flags.minus == 0)
+		ft_putwidth(data);
+	ft_putchar(c, data);
+	if (data->flags.minus == 1)
+		ft_putwidth(data);
 }
 
-static void	flag_conversions(char fmt, t_data *st, va_list args)
+size_t	ft_strlen(const char *str)
 {
-	if (fmt == 'c')
-		ft_putchar(va_arg(args, int), st);
-	if (fmt == 's')
-		ft_putstr(va_arg(args, char *), st);
-	if (fmt == 'd' || fmt == 'i' || fmt == 'o' || fmt == 'b')
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
+void	initialize_data(t_data *data)
+{
+	data->flags = (t_flags){0};
+	data->base = HEXADECIMAL;
+	data->flags.width = -1;
+	data->flags.precision = -1;
+}
+
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	sign;
+	int	result;
+
+	i = 0;
+	sign = 1;
+	result = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-')
+		sign = -sign;
+	if ((str[i] == '+') || (str[i] == '-'))
+		i++;
+	while ((str[i] >= '0') && (str[i] <= '9'))
 	{
-		st->pointer = va_arg(args, int);
-		if (st->pointer < 0)
-		{
-			ft_putchar('-', st);
-			st->pointer *= -1;
-		}
-		ft_hex_base(st->pointer, 'u', st);
+		result = (result * 10) + (str[i++] - '0');
+		if (result < 0)
+			return (-1);
 	}
-	if (fmt == 'x' || fmt == 'X' || fmt == 'u')
-		ft_hex_base(va_arg(args, unsigned int), fmt, st);
-	if (fmt == 'p')
+	return (result * sign);
+}
+
+static	bool ft_strchr(const char *s, int c)
+{
+	while (*s)
 	{
-		st->pointer = va_arg(args, long);
-		if (st->pointer == 0)
-			return (ft_putstr("(nil)", st));
-		ft_putstr("0x", st);
-		ft_hex_base(st->pointer, 'x', st);
+		if (*s == (char)c)
+			return (true);
+		s++;
+	}
+	return (false);
+}
+
+static void parse_flags(const char *fmt, t_data *data)
+{
+	while (ft_strchr(FLAGS, fmt[data->index]))
+	{
+		if (fmt[data->index] == '-')
+			data->flags.minus = 1;
+		if (fmt[data->index] == '0')
+			data->flags.zero = 1;
+		if (fmt[data->index] == '.')
+		{
+			data->flags.precision = 0;
+			while (fmt[++data->index] >= '0' && fmt[data->index] <= '9')
+				data->flags.precision = \
+				(data->flags.precision * 10) + (fmt[data->index] - '0');
+			continue ;
+		}
+		if (fmt[data->index] == '#')
+			data->flags.hash = 1;
+		if (fmt[data->index] == ' ')
+			data->flags.space = 1;
+		if (fmt[data->index] == '+')
+			data->flags.plus = 1;
+		if (fmt[data->index] == '*')
+			data->flags.width = va_arg(data->argument_list, int);
+		data->index++;
+	}
+}
+
+static void ft_putwidth(t_data *data)
+{
+	if (data->flags.precision >= 0 && data->flags.precision < data->flags.width)
+		data->flags.width = data->flags.width - data->flags.precision;
+	while (data->flags.width > 0)
+	{
+		if (data->flags.zero == 1 && data->flags.precision < 0 && data->flags.minus == 0)
+			ft_putchar('0', data);
+		else
+			ft_putchar(' ', data);
+		data->flags.width--;
+	}
+}
+
+
+static void	ft_putprecision(t_data *data)
+{
+	while (data->flags.precision > 0)
+	{
+		ft_putchar('0', data);
+		data->flags.precision--;
+	}
+}
+
+static void	ft_puthex(unsigned long nbr, unsigned int base, t_data *data)
+{
+	char	*hex_base;
+
+	if (data->flags.precision == 0 && nbr == 0)
+		return ;
+	if (data->flags.hash == 1 && data->flags.zero == 1)
+	{
+		if (data->base == HEXADECIMAL)
+			ft_putstr("0x", data);
+		if (data->base == HEXADECIMAL)
+			ft_putstr("0X", data);
+	}
+	if (nbr >= base)
+		ft_puthex(nbr / base, base, data);
+	if (data->base == HEXADECIMAL)
+		hex_base = HEX_BASE;
+	if (data->base == HEXADECIMAL)
+		hex_base = HEX_BASE_UP;
+	ft_putchar(hex_base[nbr % base], data);
+}
+
+static int	ft_nbrlen(unsigned long nbr, unsigned int base)
+{
+	int	len;
+
+	len = 0;
+	if (nbr == 0)
+		return (1);
+	while (nbr > 0)
+	{
+		nbr /= base;
+		len++;
+	}
+	return (len);
+}
+
+
+void	print_string(t_data *data)
+{
+	char	*str;
+	int		len;
+
+	str = va_arg(data->argument_list, char *);
+	if (!str)
+		str = "(null)";
+	len = ft_strlen(str);
+	if (data->flags.precision >= 0 && data->flags.precision < len)
+		len = data->flags.precision;
+	data->flags.width -= len;
+	if (data->flags.minus == 0)
+		ft_putwidth(data);
+	while (len--)
+		ft_putchar(*str++, data);
+	if (data->flags.minus == 1)
+		ft_putwidth(data);
+}
+
+void	handle_conversion(const char *fmt, t_data *data)
+{
+	data->index++;
+	if (ft_strchr(FLAGS, fmt[data->index]))
+		parse_flags(fmt, data);
+	if (ft_strchr(CONVERSIONS, fmt[data->index]))
+	{
+		if (fmt[data->index] == 'c')
+			print_char(data);
+		if (fmt[data->index] == 's')
+			print_string(data);
 	}
 }
 
 int	ft_printf(const char *fmt, ...)
 {
-	t_data	st;
-	va_list	args;
-
-	st.count = 0;
-	st.index = -1;
-	va_start(args, fmt);
-	while (fmt[++st.index])
+	t_data	data;
+	
+	data = (t_data){0};
+	va_start(data.argument_list, fmt);
+	while (fmt[data.index])
 	{
-		st.hex_ref = 16;
-		if (fmt[st.index] == '%')
-		{
-			if (fmt[++st.index] == '%')
-				ft_putchar('%', &st);
-			else
-				flag_conversions(fmt[st.index], &st, args);
-		}
+		initialize_data(&data);
+		if (fmt[data.index] == '%')
+			handle_conversion(fmt, &data);
 		else
-			ft_putchar(fmt[st.index], &st);
+			ft_putchar(fmt[data.index], &data);
+		data.index++;
 	}
-	va_end(args);
-	return (st.count);
+	va_end(data.argument_list);
+	return (data.bytes_written);
 }

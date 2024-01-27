@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhogonca <jhogonca@student.42.fr>          +#+  +:+       +#+         #
+#    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/28 13:36:34 by jhogonca          #+#    #+#              #
-#    Updated: 2023/05/30 23:07:14 by jhogonca         ###   ########.fr        #
+#    Updated: 2024/01/27 19:45:06 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJS = ${SRCS:.c=.o}
 
 CC		= gcc
 RM		= /bin/rm -f
-CFLAGS	= -Wall -Wextra -Werror -I ${INC}
+CFLAGS	= -I ${INC}
 
 INC	= ./
 CL = ar -rc
@@ -31,6 +31,8 @@ ${NAME}:	${OBJS}
 	printf "Compiling the program..\033[0;32m [OK]\033[0m\n"
 
 all: ${NAME}
+
+bonus:	${NAME}
 
 clean:
 	${RM} ${OBJS}
