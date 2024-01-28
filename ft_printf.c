@@ -108,10 +108,11 @@ static void print_string(t_data *data)
 		ft_putwidth(data, len);
 }
 
-
 int ft_strlen_base(unsigned long nb, unsigned int base)
 {
 	int len = 0;
+	if (nb == 0)
+		return 1;
 	while (nb >= base)
 	{
 		nb /= base;
@@ -143,6 +144,46 @@ static void print_pointer(t_data *data)
 	{
 		ft_putchar(' ', data);
 	}
+}
+
+
+static void print_integer(t_data *data)
+{
+	long number;
+	int len;
+	int sign;
+	
+	// Mandatory
+	number = va_arg(data->argument_list, int);
+	sign = (number < 0);
+	if (sign)
+		number *= -1;
+	len = ft_strlen_base(number, DECIMAL) + sign + 1;
+
+	if (data->flags.precision < 0)
+		data->flags.precision = len;
+	if (data->flags.minus == 0)
+	{
+		if (sign)
+		{
+			ft_putchar('-', data);
+			len--;
+			sign = 0;
+		}
+		ft_putwidth(data, len);
+	}
+	// Mandatory
+	if (sign)
+		ft_putchar('-', data);
+	
+	// Bonus
+	while (data->flags.precision-- > len)
+		ft_putchar('0', data);
+	if (number == 0 && data->flags.precision == 0)
+		return ;
+	ft_putstr_base(number, DECIMAL, DEC_BASE, data);
+	if (data->flags.minus == 1)
+		ft_putwidth(data, len);
 }
 
 static void parse_flags(const char *fmt, t_data *data)
@@ -179,7 +220,8 @@ static void handle_conversion(const char *fmt, t_data *data)
 		print_string(data);
 	else if (fmt[data->index] == 'p')
 		print_pointer(data);
-	
+	else if (fmt[data->index] == 'd' || fmt[data->index] == 'i')
+		print_integer(data);
 }
 
 static void init_flags(t_data *data)
@@ -209,11 +251,3 @@ int ft_printf(const char *fmt, ...)
 	va_end(data.argument_list);
 	return data.bytes_written;
 }
-
-
-
-
-
-
-
-
