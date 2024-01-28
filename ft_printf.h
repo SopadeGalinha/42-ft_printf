@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:43 by jhogonca          #+#    #+#             */
-/*   Updated: 2024/01/27 22:30:46 by jhogonca         ###   ########.fr       */
+/*   Updated: 2024/01/28 11:11:18 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@
 // -- STRUCT
 typedef struct s_flags
 {
-	bool minus;
-	bool zero;
+	int minus;
+	int zero;
 	int precision;
 	int width;
 
-	bool hash;
-	bool space;
-	bool plus;
+	int hash;
+	int space;
+	int plus;
 }	t_flags;
 
 typedef struct s_data
 {
 	unsigned int	base;
 	int				index;
-	size_t			bytes_written;
+	int				bytes_written;
 	long			temporary;
 	va_list			argument_list;
 	t_flags			flags;
