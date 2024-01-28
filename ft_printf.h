@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:43 by jhogonca          #+#    #+#             */
-/*   Updated: 2024/01/28 11:11:18 by jhogonca         ###   ########.fr       */
+/*   Updated: 2024/01/28 11:35:47 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define FLAGS		"-0.*# +"
 #define CONVERSIONS	"cspdiuxX%"
@@ -50,7 +51,6 @@ typedef struct s_data
 	unsigned int	base;
 	int				index;
 	int				bytes_written;
-	long			temporary;
 	va_list			argument_list;
 	t_flags			flags;
 }	t_data;

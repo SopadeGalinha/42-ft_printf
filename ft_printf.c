@@ -6,6 +6,12 @@ static void ft_putchar(const char c, t_data *st)
 	st->bytes_written += write(1, &c, 1);
 }
 
+static void ft_putstr(const char *s, t_data *st)
+{
+	while (s && *s)
+		ft_putchar(*s++, st);
+}
+
 static bool ft_strchr(const char *s, int c)
 {
 	while (*s)
@@ -56,7 +62,6 @@ void	set_width(const char *fmt, t_data *data, int flag)
 static void ft_putwidth(t_data *data, int content_width)
 {
 	data->flags.width = data->flags.width - content_width;
-
 	while (data->flags.width > 0)
 	{
 		if (data->flags.zero == 1 && data->flags.minus == 0)
@@ -65,6 +70,14 @@ static void ft_putwidth(t_data *data, int content_width)
 			ft_putchar(' ', data);
 		data->flags.width--;
 	}
+}
+
+static void ft_putstr_base(unsigned long nb, unsigned int base, \
+const char *base_str, t_data *data)
+{
+	if (nb >= base)
+		ft_putstr_base(nb / base, base, base_str, data);
+	ft_putchar(base_str[nb % base], data);
 }
 
 static void print_char(t_data *data)
@@ -95,25 +108,41 @@ static void print_string(t_data *data)
 		ft_putwidth(data, len);
 }
 
+
+int ft_strlen_base(unsigned long nb, unsigned int base)
+{
+	int len = 0;
+	while (nb >= base)
+	{
+		nb /= base;
+		len++;
+	}
+	return len;
+}
+
 static void print_pointer(t_data *data)
 {
+	long pointer;
+	int len;
+	
 	data->flags.hash = 1;
 	data->flags.zero = 0;
 	data->flags.plus = 0;
 	data->flags.space = 0;
 	data->flags.precision = -1;
-	data->flags.width = -1;
-	data->base = HEXADECIMAL;
-	data->temporary = va_arg(data->argument_list, long);
+	
+	pointer = va_arg(data->argument_list, long);
 	if (data->flags.minus == 0)
 		ft_putwidth(data, 2);
+	if (pointer == 0)
+		return (ft_putstr("(nil)", data));
 	ft_putstr("0x", data);
-	if (data->temporary == 0)
-		ft_putchar('0', data);
-	else
-		ft_putnbr_base(data->temporary, data->base, data);
-	if (data->flags.minus == 1)
-		ft_putwidth(data, 2);
+	ft_putstr_base(pointer, HEXADECIMAL, HEX_BASE, data);
+	len = ft_strlen_base(pointer, HEXADECIMAL) + 2;
+	while (data->flags.minus == 1 && --data->flags.width > len)
+	{
+		ft_putchar(' ', data);
+	}
 }
 
 static void parse_flags(const char *fmt, t_data *data)
@@ -180,4 +209,11 @@ int ft_printf(const char *fmt, ...)
 	va_end(data.argument_list);
 	return data.bytes_written;
 }
+
+
+
+
+
+
+
 
