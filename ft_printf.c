@@ -179,6 +179,11 @@ static void print_integer(t_data *data)
         number *= -1;
 	}
     len = ft_strlen_base(number, DECIMAL) + sign;
+	if (data->flags.precision && data->flags.minus == 0 && data->flags.zero == 0)
+	{
+		data->flags.zero = 1;
+		data->flags.width = data->flags.precision + sign;
+	}
     if (data->flags.space && !sign)
         ft_putchar(' ', data);
 	check_minus(data, &sign, &len);
@@ -215,13 +220,46 @@ void print_unsigned(t_data *data)
 {
 	unsigned int number;
 	int len;
-	int sign;
 
 	number = va_arg(data->argument_list, unsigned int);
 	len = ft_strlen_base(number, DECIMAL);
+	if (data->flags.precision && data->flags.minus == 0 && data->flags.zero == 0)
+	{
+		data->flags.zero = 1;
+		data->flags.width = data->flags.precision;
+	}
 	if (data->flags.minus == 0)
 		ft_putwidth(data, len);
 	ft_putstr_base(number, DECIMAL, DEC_BASE, data);
+	if (data->flags.minus == 1)
+		ft_putwidth(data, len);
+}
+
+static void print_hexadecimal(t_data *data, bool uppercase)
+{
+	char			*prefix;
+	unsigned int	number;
+	char			*base;
+	int				len;
+
+	prefix = "0x";
+	base = HEX_BASE;
+	if (uppercase) {
+		prefix = "0X";
+		base = HEX_BASE_UP;
+	}
+	number = va_arg(data->argument_list, unsigned int);
+	len = ft_strlen_base(number, HEXADECIMAL);
+	if (data->flags.precision && data->flags.minus == 0 && data->flags.zero == 0)
+	{
+		data->flags.zero = 1;
+		data->flags.width = data->flags.precision;
+	}
+	if (data->flags.minus == 0)
+		ft_putwidth(data, len);
+	if (data->flags.hash && number != 0)
+		ft_putstr(prefix, data);
+	ft_putstr_base(number, HEXADECIMAL, base, data);
 	if (data->flags.minus == 1)
 		ft_putwidth(data, len);
 }
@@ -232,6 +270,7 @@ static void handle_conversion(const char *fmt, t_data *data)
 	if (ft_strchr(FLAGS, fmt[data->index]) \
 	|| ft_strchr(DEC_BASE, fmt[data->index]))
 		parse_flags(fmt, data);
+	auto bool uppercase = fmt[data->index] == 'X';
 	if (fmt[data->index] == 'd' || fmt[data->index] == 'i')
 		print_integer(data);
 	else if (fmt[data->index] == 'c')
@@ -242,6 +281,10 @@ static void handle_conversion(const char *fmt, t_data *data)
 		print_pointer(data);
 	else if (fmt[data->index] == 'u')
 		print_unsigned(data);
+	else if (fmt[data->index] == 'x' || fmt[data->index] == 'X')
+		print_hexadecimal(data, uppercase);
+	else if (fmt[data->index] == '%')
+		ft_putchar('%', data);
 }
 
 static void init_flags(t_data *data)
@@ -271,3 +314,4 @@ int ft_printf(const char *fmt, ...)
 	va_end(data.argument_list);
 	return data.bytes_written;
 }
+
