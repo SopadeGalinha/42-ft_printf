@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:43 by jhogonca          #+#    #+#             */
-/*   Updated: 2024/01/30 01:32:35 by jhogonca         ###   ########.fr       */
+/*   Updated: 2024/01/30 19:51:48 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_flags
 	int zero;
 	int precision;
 	int width;
-
 	int hash;
 	int space;
 	int plus;
@@ -48,16 +47,30 @@ typedef struct s_flags
 
 typedef struct s_data
 {
-	unsigned int	base;
 	int				index;
 	int				bytes_written;
-	char			conversion;
 	va_list			argument_list;
 	t_flags			flags;
-}	t_data;
+}		t_data;
 
 // - FUNCTIONS
 
 int		ft_printf(const char *fmt, ...);
+void	print_string(t_data *data);
+void	print_char(t_data *data);
+void	print_pointer(t_data *data);
+void	print_integer(t_data *data);
+void	print_unsigned(t_data *data);
+void	print_hexadecimal(t_data *data, bool uppercase);
+void	ft_putchar(const char c, t_data *st);
+void	ft_putstr(const char *s, t_data *st);
+void	ft_putwidth(t_data *data, int len);
+void	ft_putstr_base(unsigned long nb, unsigned int base, \
+const char *base_str, t_data *data);
+void	init_flags(t_data *data);
+int		ft_strlen_base(unsigned long nb, unsigned int base);
+int		ft_strlen(const char *s);
+bool	ft_strchr(const char *s, int c);
+
 
 #endif

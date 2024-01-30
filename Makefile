@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/28 13:36:34 by jhogonca          #+#    #+#              #
-#    Updated: 2024/01/27 19:45:06 by jhogonca         ###   ########.fr        #
+#    Updated: 2024/01/30 19:46:20 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@
 
 NAME =  libftprintf.a
 
-SRCS = ft_printf.c
+SRCS = ft_printf.c print_functions_diux.c print_functions_csp.c utils.c
 OBJS = ${SRCS:.c=.o}
 
-CC		= gcc
+CC		= cc
 RM		= /bin/rm -f
 CFLAGS	= -I ${INC}
 
