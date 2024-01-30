@@ -12,31 +12,31 @@
 
 #include "ft_printf.h"
 
-int ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
 	int	len;
-	
+
 	len = 0;
 	while (s && *s++)
 		len++;
 	return (len);
 }
 
-bool ft_strchr(const char *s, int c)
+bool	ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{
 		if (*s == (char)c)
-			return true;
+			return (true);
 		s++;
 	}
-	return false;
+	return (false);
 }
 
-int ft_strlen_base(unsigned long nb, unsigned int base)
+int	ft_strlen_base(unsigned long nb, unsigned int base)
 {
-	int len;
-	
+	int	len;
+
 	len = 0;
 	if (nb <= 0)
 		len++;
@@ -45,10 +45,10 @@ int ft_strlen_base(unsigned long nb, unsigned int base)
 		nb /= base;
 		len++;
 	}
-	return len;
+	return (len);
 }
 
-void ft_putstr_base(unsigned long nb, unsigned int base, \
+void	ft_putstr_base(unsigned long nb, unsigned int base, \
 const char *base_str, t_data *data)
 {
 	if (nb >= base)
@@ -56,7 +56,7 @@ const char *base_str, t_data *data)
 	ft_putchar(base_str[nb % base], data);
 }
 
-void init_flags(t_data *data)
+void	init_flags(t_data *data)
 {
 	data->flags = (t_flags){0};
 	data->flags.precision = -1;

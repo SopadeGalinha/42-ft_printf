@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:08:12 by jhogonca          #+#    #+#             */
-/*   Updated: 2024/01/30 20:21:47 by jhogonca         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:46:41 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	ft_setwidth(const char *fmt, t_data *data, int flag)
 {
-	int result;
+	int	result;
 
 	data->flags.zero = flag == '0';
 	data->flags.space = flag == ' ';
 	data->flags.minus = flag == '-';
 	data->flags.precision = flag == '.';
-	while (fmt[data->index] ==  flag)
+	while (fmt[data->index] == flag)
 		data->index++;
 	result = 0;
 	while (fmt[data->index] >= '0' && fmt[data->index] <= '9')
@@ -29,7 +29,7 @@ void	ft_setwidth(const char *fmt, t_data *data, int flag)
 	if (flag == '.')
 	{
 		data->flags.precision = result;
-		data->flags.width = -1;	
+		data->flags.width = -1;
 	}
 	else
 	{
@@ -38,10 +38,9 @@ void	ft_setwidth(const char *fmt, t_data *data, int flag)
 	}
 }
 
-void ft_putwidth(t_data *data, int content_width)
+void	ft_putwidth(t_data *data, int content_width)
 {
 	data->flags.width = data->flags.width - content_width;
-
 	while (data->flags.width > 0)
 	{
 		if (data->flags.zero == 1 && data->flags.minus == 0)
@@ -52,14 +51,15 @@ void ft_putwidth(t_data *data, int content_width)
 	}
 }
 
-static void parse_flags(const char *fmt, t_data *data)
+static void	parse_flags(const char *fmt, t_data *data)
 {
 	while (ft_strchr(FLAGS, fmt[data->index]) \
 	|| (fmt[data->index] >= '0' && fmt[data->index] <= '9'))
 	{
 		if (fmt[data->index] == '0')
 			ft_setwidth(fmt, data, '0');
-		else if (fmt[data->index] == '-' || (fmt[data->index] >= '0' && fmt[data->index] <= '9'))
+		else if (fmt[data->index] == '-' || \
+		(fmt[data->index] >= '0' && fmt[data->index] <= '9'))
 			ft_setwidth(fmt, data, '-');
 		else if (fmt[data->index] == ' ')
 			ft_setwidth(fmt, data, ' ');
@@ -75,9 +75,9 @@ static void parse_flags(const char *fmt, t_data *data)
 	}
 }
 
-static void handle_conversion(const char *fmt, t_data *data)
+static void	handle_conversion(const char *fmt, t_data *data)
 {
-	bool uppercase;
+	bool	uppercase;
 
 	if (ft_strchr(FLAGS, fmt[++data->index]) \
 	|| ft_strchr(DEC_BASE, fmt[data->index]))
@@ -99,9 +99,9 @@ static void handle_conversion(const char *fmt, t_data *data)
 		ft_putchar('%', data);
 }
 
-int ft_printf(const char *fmt, ...)
+int	ft_printf(const char *fmt, ...)
 {
-	t_data data;
+	t_data	data;
 
 	data = (t_data){0};
 	va_start(data.argument_list, fmt);
@@ -117,11 +117,3 @@ int ft_printf(const char *fmt, ...)
 	va_end(data.argument_list);
 	return (data.bytes_written);
 }
-
-/* int main(void)
-{
-	ft_printf("M: [%-11p] [%-12p] \n", INT_MIN, INT_MAX);
-	   printf("O: [%-11p] [%-12p] \n", INT_MIN, INT_MAX);
-	// ft_printf(" [%-13p] [%-14p] \n", ULONG_MAX, -ULONG_MAX);
-	
-} */
