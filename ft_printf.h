@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 13:34:43 by jhogonca          #+#    #+#             */
-/*   Updated: 2024/01/28 11:35:47 by jhogonca         ###   ########.fr       */
+/*   Updated: 2024/01/30 01:32:35 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_data
 	unsigned int	base;
 	int				index;
 	int				bytes_written;
+	char			conversion;
 	va_list			argument_list;
 	t_flags			flags;
 }	t_data;
