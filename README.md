@@ -2,6 +2,7 @@
   <b>ft_printf</b>
 </h1>
 
+
 <h2 align="center">
   <i>42cursus Project #3</i>
 </h2>
@@ -12,8 +13,14 @@
 
 <div align=center>
 <h2>
-	Final Score & Evaluation
+	Final Score & Evaluations
 </h2>
+<p align="center">
+  <img src="https://github.com/SopadeGalinha/42-ft_printf/assets/75684404/4724fb0b-0d92-4519-8271-de946bcd64df" alt="Imagem do ft_printf">
+  <img src="https://github.com/SopadeGalinha/42-ft_printf/assets/75684404/7a23d315-2982-40c3-90a5-1e1c4996099e" alt="Imagem do ft_printf">
+  <img src="https://github.com/SopadeGalinha/42-ft_printf/assets/75684404/0e0199d4-796a-4b45-a92a-45dc59d7509a" alt="Imagem do ft_printf">
+
+</p>
 
 ## Project Overview
 
