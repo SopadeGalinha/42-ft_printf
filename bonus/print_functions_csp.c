@@ -40,7 +40,7 @@ void	print_string(t_data *data)
 	char	*str;
 	int		len;
 
-	*str = va_arg(data->argument_list, char *);
+	str = va_arg(data->argument_list, char *);
 	if (!str)
 		str = "(null)";
 	len = ft_strlen(str);

@@ -82,7 +82,7 @@ void	print_hexadecimal(t_data *data, bool uppercase)
 	unsigned int	number;
 	int				len;
 
-	auto char prefix = "0x";
+	auto char *prefix = "0x";
 	auto char *base = HEX_BASE;
 	if (uppercase)
 	{
