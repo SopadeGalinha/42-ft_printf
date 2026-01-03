@@ -26,52 +26,71 @@ void	ft_putstr(const char *s, t_data *st)
 void	print_char(t_data *data)
 {
 	char	c;
+	int	pad;
+	char	pad_char;
 
 	c = va_arg(data->argument_list, int);
-	data->flags.zero = 0;
-	if (data->flags.minus == 0)
-		ft_putwidth(data, 1);
+	pad = 0;
+	if (data->flags.width > 1)
+		pad = data->flags.width - 1;
+	pad_char = (data->flags.zero && data->flags.minus == 0) ? '0' : ' ';
+	if (!data->flags.minus)
+		ft_putnchar(data, pad_char, pad);
 	ft_putchar(c, data);
-	ft_putwidth(data, 1);
+	if (data->flags.minus)
+		ft_putnchar(data, ' ', pad);
 }
 
 void	print_string(t_data *data)
 {
 	char	*str;
 	int		len;
+	int		effective_len;
+	int		pad;
 
 	str = va_arg(data->argument_list, char *);
 	if (!str)
 		str = "(null)";
 	len = ft_strlen(str);
-	if (data->flags.precision < 0)
-		data->flags.precision = len;
-	if (data->flags.minus == 0)
-		ft_putwidth(data, len);
-	while (str && *str && data->flags.precision--)
+	effective_len = len;
+	if (data->flags.precision >= 0 && data->flags.precision < len)
+		effective_len = data->flags.precision;
+	pad = 0;
+	if (data->flags.width > effective_len)
+		pad = data->flags.width - effective_len;
+	if (!data->flags.minus)
+		ft_putnchar(data, ' ', pad);
+	while (str && *str && effective_len-- > 0)
 		ft_putchar(*str++, data);
-	if (data->flags.minus == 1)
-		ft_putwidth(data, len);
+	if (data->flags.minus)
+		ft_putnchar(data, ' ', pad);
 }
 
 void	print_pointer(t_data *data)
 {
-	long	pointer;
-	int		len;
+	unsigned long	ptr;
+	int				len;
+	int				pad;
 
-	data->flags.hash = 1;
+	ptr = (unsigned long)va_arg(data->argument_list, void *);
 	data->flags.zero = 0;
-	data->flags.plus = 0;
-	data->flags.space = 0;
-	data->flags.precision = -1;
-	pointer = va_arg(data->argument_list, long);
-	if (data->flags.minus == 0)
-		ft_putwidth(data, 2);
-	if (pointer == 0)
-		return (ft_putstr("(nil)", data));
-	ft_putstr("0x", data);
-	ft_putstr_base(pointer, HEXADECIMAL, HEX_BASE, data);
-	len = ft_strlen_base(pointer, HEXADECIMAL) + 2;
-	while (data->flags.minus == 1 && data->flags.width-- > len)
-		ft_putchar(' ', data);
+	len = 0;
+	if (ptr == 0)
+		len = 5;
+	else
+		len = ft_strlen_base(ptr, HEXADECIMAL) + 2;
+	pad = 0;
+	if (data->flags.width > len)
+		pad = data->flags.width - len;
+	if (!data->flags.minus)
+		ft_putnchar(data, ' ', pad);
+	if (ptr == 0)
+		ft_putstr("(nil)", data);
+	else
+	{
+		ft_putstr("0x", data);
+		ft_putstr_base(ptr, HEXADECIMAL, HEX_BASE, data);
+	}
+	if (data->flags.minus)
+		ft_putnchar(data, ' ', pad);
 }

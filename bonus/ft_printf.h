@@ -64,12 +64,12 @@ void	print_unsigned(t_data *data);
 void	print_hexadecimal(t_data *data, bool uppercase);
 void	ft_putchar(const char c, t_data *st);
 void	ft_putstr(const char *s, t_data *st);
-void	ft_putwidth(t_data *data, int len);
 void	ft_putstr_base(unsigned long nb, unsigned int base, \
 const char *base_str, t_data *data);
 void	init_flags(t_data *data);
 int		ft_strlen_base(unsigned long nb, unsigned int base);
 int		ft_strlen(const char *s);
+void	ft_putnchar(t_data *data, char c, int count);
 bool	ft_strchr(const char *s, int c);
 
 #endif

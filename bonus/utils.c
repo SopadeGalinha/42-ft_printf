@@ -38,8 +38,10 @@ int	ft_strlen_base(unsigned long nb, unsigned int base)
 	int	len;
 
 	len = 0;
-	if (nb <= 0)
-		len++;
+	if (nb == 0)
+	{
+		return (1);
+	}
 	while (nb != 0)
 	{
 		nb /= base;
@@ -54,6 +56,12 @@ const char *base_str, t_data *data)
 	if (nb >= base)
 		ft_putstr_base(nb / base, base, base_str, data);
 	ft_putchar(base_str[nb % base], data);
+}
+
+void	ft_putnchar(t_data *data, char c, int count)
+{
+	while (count-- > 0)
+		ft_putchar(c, data);
 }
 
 void	init_flags(t_data *data)

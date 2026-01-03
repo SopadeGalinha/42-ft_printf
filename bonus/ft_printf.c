@@ -12,67 +12,88 @@
 
 #include "ft_printf.h"
 
-void	ft_setwidth(const char *fmt, t_data *data, int flag)
+static int	parse_number(const char *fmt, int *idx)
 {
 	int	result;
 
-	data->flags.zero = flag == '0';
-	data->flags.space = flag == ' ';
-	data->flags.minus = flag == '-';
-	data->flags.precision = flag == '.';
-	while (fmt[data->index] == flag)
-		data->index++;
 	result = 0;
-	while (fmt[data->index] >= '0' && fmt[data->index] <= '9')
-		result = (result * 10) + (fmt[data->index++] - '0');
-	data->index--;
-	if (flag == '.')
+	while (fmt[*idx] >= '0' && fmt[*idx] <= '9')
 	{
-		data->flags.precision = result;
-		data->flags.width = -1;
+		result = (result * 10) + (fmt[*idx] - '0');
+		(*idx)++;
 	}
-	else
-	{
-		data->flags.width = result;
-		data->flags.precision = -1;
-	}
-}
-
-void	ft_putwidth(t_data *data, int content_width)
-{
-	data->flags.width = data->flags.width - content_width;
-	while (data->flags.width > 0)
-	{
-		if (data->flags.zero == 1 && data->flags.minus == 0)
-			ft_putchar('0', data);
-		else
-			ft_putchar(' ', data);
-		data->flags.width--;
-	}
+	(*idx)--;
+	return (result);
 }
 
 static void	parse_flags(const char *fmt, t_data *data)
 {
-	while (ft_strchr(FLAGS, fmt[data->index]) \
-	|| (fmt[data->index] >= '0' && fmt[data->index] <= '9'))
+	while (fmt[data->index] && (ft_strchr(FLAGS, fmt[data->index]) ||
+		(fmt[data->index] >= '0' && fmt[data->index] <= '9')))
 	{
-		if (fmt[data->index] == '0')
-			ft_setwidth(fmt, data, '0');
-		else if (fmt[data->index] == '-' || \
-		(fmt[data->index] >= '0' && fmt[data->index] <= '9'))
-			ft_setwidth(fmt, data, '-');
-		else if (fmt[data->index] == ' ')
-			ft_setwidth(fmt, data, ' ');
-		else if (fmt[data->index] == '.')
-			ft_setwidth(fmt, data, '.');
+		if (fmt[data->index] == '-')
+		{
+			data->flags.minus = 1;
+			data->flags.zero = 0;
+		}
+		else if (fmt[data->index] == '0' && data->flags.minus == 0
+			&& data->flags.precision < 0)
+			data->flags.zero = 1;
+		else if (fmt[data->index] == ' ' && data->flags.plus == 0)
+			data->flags.space = 1;
+		else if (fmt[data->index] == '+')
+		{
+			data->flags.plus = 1;
+			data->flags.space = 0;
+		}
 		else if (fmt[data->index] == '#')
 			data->flags.hash = 1;
-		else if (fmt[data->index] == '+')
-			data->flags.plus = 1;
 		else if (fmt[data->index] == '*')
+		{
 			data->flags.width = va_arg(data->argument_list, int);
+			if (data->flags.width < 0)
+			{
+				data->flags.minus = 1;
+				data->flags.width *= -1;
+				data->flags.zero = 0;
+			}
+		}
+		else if (fmt[data->index] == '.')
+		{
+			data->flags.precision = 0;
+			data->index++;
+			if (fmt[data->index] == '*')
+			{
+				data->flags.precision = va_arg(data->argument_list, int);
+				if (data->flags.precision < 0)
+					data->flags.precision = -1;
+			}
+			else if (fmt[data->index] >= '0' && fmt[data->index] <= '9')
+				data->flags.precision = parse_number(fmt, &data->index);
+			else
+				data->index--;
+			data->flags.zero = 0;
+		}
+		else if (fmt[data->index] >= '0' && fmt[data->index] <= '9')
+			data->flags.width = parse_number(fmt, &data->index);
 		data->index++;
 	}
+}
+
+static void	print_percent(t_data *data)
+{
+	int	pad;
+	char	pad_char;
+
+	pad = 0;
+	if (data->flags.width > 1)
+		pad = data->flags.width - 1;
+	pad_char = (data->flags.zero && !data->flags.minus) ? '0' : ' ';
+	if (!data->flags.minus)
+		ft_putnchar(data, pad_char, pad);
+	ft_putchar('%', data);
+	if (data->flags.minus)
+		ft_putnchar(data, ' ', pad);
 }
 
 static void	handle_conversion(const char *fmt, t_data *data)
@@ -96,7 +117,7 @@ static void	handle_conversion(const char *fmt, t_data *data)
 	else if (fmt[data->index] == 'x' || fmt[data->index] == 'X')
 		print_hexadecimal(data, uppercase);
 	else if (fmt[data->index] == '%')
-		ft_putchar('%', data);
+		print_percent(data);
 }
 
 int	ft_printf(const char *fmt, ...)
