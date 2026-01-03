@@ -1,33 +1,37 @@
 .SILENT:
 
-MANDATORY_DIR	= mandatory
-BONUS_DIR	= bonus
+NAME	= libftprintf.a
+SRCS	= ft_printf.c parsing.c conversions_csp.c conversions_diux.c \
+		conversions_hex.c conversions_box.c conversions_utils.c \
+		print_utils.c utils.c flags_utils.c
+OBJS	= $(SRCS:.c=.o)
+
 TEST_DIR	= tests
-
-MANDATORY_LIB	= $(MANDATORY_DIR)/libftprintf.a
-BONUS_LIB	= $(BONUS_DIR)/libftprintf.a
-
 MANDATORY_TEST	= $(TEST_DIR)/mandatory/ft_printf_mandatory_tests
 BONUS_TEST	= $(TEST_DIR)/bonus/ft_printf_bonus_tests
 
-CC		= cc
-CFLAGS		= -Wall -Wextra -Werror
+CC	= cc
+CFLAGS	= -Wall -Wextra -Werror
+AR	= ar
+RM	= rm -f
 
-all: test
+all: $(NAME)
 
-$(MANDATORY_LIB):
-	$(MAKE) -C $(MANDATORY_DIR) all
+$(NAME): $(OBJS)
+	$(AR) rcs $(NAME) $(OBJS)
+	printf "Archive ready -> $(NAME)\n"
 
-$(BONUS_LIB):
-	$(MAKE) -C $(BONUS_DIR) bonus
+bonus: $(NAME)
 
-$(MANDATORY_TEST): $(TEST_DIR)/mandatory/test_ft_printf_mandatory.c $(TEST_DIR)/test_utils.c $(TEST_DIR)/test_utils.h $(MANDATORY_LIB)
-	$(CC) $(CFLAGS) -I$(TEST_DIR) -I$(MANDATORY_DIR) $(TEST_DIR)/mandatory/test_ft_printf_mandatory.c \
-		$(TEST_DIR)/test_utils.c -L$(MANDATORY_DIR) -lftprintf -o $@
+$(MANDATORY_TEST): $(TEST_DIR)/mandatory/test_ft_printf_mandatory.c $(TEST_DIR)/test_utils.c $(TEST_DIR)/test_utils.h $(NAME)
+	$(CC) $(CFLAGS) -I. -I$(TEST_DIR) \
+		$(TEST_DIR)/mandatory/test_ft_printf_mandatory.c $(TEST_DIR)/test_utils.c \
+		-L. -lftprintf -o $@
 
-$(BONUS_TEST): $(TEST_DIR)/bonus/test_ft_printf_bonus.c $(TEST_DIR)/test_utils.c $(TEST_DIR)/test_utils.h $(BONUS_LIB)
-	$(CC) $(CFLAGS) -I$(TEST_DIR) -I$(BONUS_DIR) $(TEST_DIR)/bonus/test_ft_printf_bonus.c \
-		$(TEST_DIR)/test_utils.c -L$(BONUS_DIR) -lftprintf -o $@
+$(BONUS_TEST): $(TEST_DIR)/bonus/test_ft_printf_bonus.c $(TEST_DIR)/test_utils.c $(TEST_DIR)/test_utils.h $(NAME)
+	$(CC) $(CFLAGS) -I. -I$(TEST_DIR) \
+		$(TEST_DIR)/bonus/test_ft_printf_bonus.c $(TEST_DIR)/test_utils.c \
+		-L. -lftprintf -o $@
 
 test-mandatory: $(MANDATORY_TEST)
 	@$(MANDATORY_TEST)
@@ -38,13 +42,18 @@ test-bonus: $(BONUS_TEST)
 test: test-mandatory test-bonus
 	@printf "\nAll test suites finished.\n"
 
+clean:
+	$(RM) $(OBJS)
+	printf "Object files removed.\n"
+
 clean-tests:
-	@rm -f $(MANDATORY_TEST) $(BONUS_TEST)
+	$(RM) $(MANDATORY_TEST) $(BONUS_TEST)
+	printf "Test binaries removed.\n"
 
-fclean: clean-tests
-	@$(MAKE) -C $(MANDATORY_DIR) fclean
-	@$(MAKE) -C $(BONUS_DIR) fclean
+fclean: clean clean-tests
+	$(RM) $(NAME)
+	printf "Library removed.\n"
 
-re: fclean test
+re: fclean all
 
-.PHONY: all test test-mandatory test-bonus clean-tests fclean re
+.PHONY: all bonus test test-mandatory test-bonus clean clean-tests fclean re
